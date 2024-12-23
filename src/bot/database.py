@@ -7,8 +7,8 @@ from chromadb.types import Literal
 
 from src.bot.create_bot import model
 
-HOST = "62.60.249.194"
-PORT = 8000
+HOST = "127.0.0.1"
+PORT = 80
 
 
 class VectorDB:
