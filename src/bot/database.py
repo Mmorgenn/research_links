@@ -85,8 +85,8 @@ class VectorDB:
         viewed: list[str] = json.loads(viewed) if isinstance(viewed, str) else [self.user_id]
 
         other_form = await user_collection.query(
-            query_embeddings=[np.array(user_form["embeddings"][0])], n_results=1, where={"id": {"$nin": viewed}}
-        )  # type: ignore
+            query_embeddings=[np.array(user_form["embeddings"][0])], n_results=1, where={"id": {"$nin": viewed}}  # type: ignore
+        )
 
         if (
             not isinstance(other_form["metadatas"], list)
