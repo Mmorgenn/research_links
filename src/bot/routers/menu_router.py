@@ -1,10 +1,10 @@
-from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup
+from aiogram import F, Router
 from aiogram.filters import Command
-from src.bot.keyboards import MenuK
-from src.bot.create_bot import bot
-from src.bot.routers.states import MenuState
+from aiogram.types import CallbackQuery, InlineKeyboardMarkup, Message
 
+from src.bot.create_bot import bot
+from src.bot.keyboards import MenuK
+from src.bot.routers.states import MenuState
 
 menu_router = Router()
 
@@ -26,4 +26,3 @@ async def main_menu(message: Message | CallbackQuery) -> None:
 
 menu_router.message.register(main_menu, MenuState.menu, Command("menu"))
 menu_router.callback_query.register(main_menu, MenuState.menu, F.data == "main_menu")
-

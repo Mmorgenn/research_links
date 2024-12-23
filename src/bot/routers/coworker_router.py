@@ -1,12 +1,12 @@
-from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery, User
-from src.bot.keyboards import MenuK, CoworkerK
-from src.bot.response import response
-from src.bot.database import client_connect
-from src.bot.routers.menu_router import delete_message, send_other_chat
-from src.bot.utils.questionnaire import Questionnaire
-from src.bot.routers.states import MenuState
+from aiogram import F, Router
+from aiogram.types import CallbackQuery, Message, User
 
+from src.bot.database import client_connect
+from src.bot.keyboards import CoworkerK, MenuK
+from src.bot.response import response
+from src.bot.routers.menu_router import delete_message, send_other_chat
+from src.bot.routers.states import MenuState
+from src.bot.utils.questionnaire import Questionnaire
 
 coworker_router = Router()
 
@@ -33,14 +33,15 @@ async def reply_like(call: CallbackQuery) -> None:
     collection = await client_connect(user_id)
     await collection.match(other_id)
 
-    await send_other_chat(chat_id, text=response["matched"].format(call.from_user.username),
-                          markup=MenuK.back_keyboard())
+    await send_other_chat(
+        chat_id, text=response["matched"].format(call.from_user.username), markup=MenuK.back_keyboard()
+    )
     await call.answer(text=response["matched_call"])
 
 
 @coworker_router.callback_query(MenuState.menu, lambda cb: cb.data and cb.data.startswith("coworker"))
 async def show_coworker(call: CallbackQuery) -> None:
-    if not(isinstance(call.message, Message) and isinstance(call.from_user, User)):
+    if not (isinstance(call.message, Message) and isinstance(call.from_user, User)):
         return None
 
     await delete_message(call.message)
@@ -53,4 +54,6 @@ async def show_coworker(call: CallbackQuery) -> None:
         await call.message.answer(text=response["no_matched"], reply_markup=MenuK.back_keyboard())
     else:
         username = form.get("username", "durov")
-        await call.message.answer(text=Questionnaire(form).show(), reply_markup=CoworkerK.coworker_keyboard(username, ind))
+        await call.message.answer(
+            text=Questionnaire(form).show(), reply_markup=CoworkerK.coworker_keyboard(username, ind)
+        )

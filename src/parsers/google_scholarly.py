@@ -9,7 +9,7 @@ class GooglePars:
 
     @staticmethod
     def get_most_cited(author: Author) -> str | None:
-        most_cited_article = max(author['publications'], key=lambda pub: pub['num_citations'], default=None)
+        most_cited_article = max(author["publications"], key=lambda pub: pub["num_citations"], default=None)
         if not most_cited_article:
             return None
 
@@ -18,7 +18,7 @@ class GooglePars:
 
     @staticmethod
     def get_organization(author: Author) -> str | None:
-        affiliation = author.get('affiliation', None)
+        affiliation = author.get("affiliation", None)
         return affiliation
 
     @staticmethod
@@ -44,9 +44,4 @@ class GooglePars:
         h = self.get_hindex(author)
         i10 = self.get_i10(author)
 
-        return {
-            "organization": organization,
-            "most_cited": most_cited,
-            "hindex": h,
-            "i10index": i10
-        }
+        return {"organization": organization, "most_cited": most_cited, "hindex": h, "i10index": i10}

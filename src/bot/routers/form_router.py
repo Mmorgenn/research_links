@@ -1,18 +1,18 @@
-from aiogram import Router, F
-from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery, User
+from aiogram import F, Router
 from aiogram.filters import CommandStart
+from aiogram.fsm.context import FSMContext
+from aiogram.types import CallbackQuery, Message, User
+
+from src.bot.create_bot import bot
+from src.bot.database import client_connect
 from src.bot.keyboards.form_keyboard import FormK
 from src.bot.response import response
-from src.bot.utils.filters import List_Filter
-from src.bot.utils.questionnaire import Questionnaire
-from src.bot.database import client_connect
-from src.bot.create_bot import bot
 from src.bot.routers.menu_router import MenuState
 from src.bot.routers.states import FormState
-from src.parsers.google_scholarly import GooglePars
+from src.bot.utils.filters import List_Filter
+from src.bot.utils.questionnaire import Questionnaire
 from src.parsers.github_parser import GithubPars
-
+from src.parsers.google_scholarly import GooglePars
 
 form_router = Router()
 
@@ -68,8 +68,9 @@ async def get_gender_message(message: Message, state: FSMContext) -> None:
     first_name = message.from_user.first_name
     last_name = message.from_user.last_name
 
-    await message.answer(text=response["name"], reply_markup=FormK.name_keyboard(
-                         f"{first_name} {last_name if last_name else ""}"))
+    await message.answer(
+        text=response["name"], reply_markup=FormK.name_keyboard(f"{first_name} {last_name if last_name else ""}")
+    )
 
 
 @form_router.message(FormState.name)
@@ -87,7 +88,7 @@ async def get_age_message(message: Message, state: FSMContext) -> None:
 
 
 @form_router.message(FormState.status, lambda message: message.text.title() in POSSIBLE_STATUS)
-async  def get_status_message(message: Message, state: FSMContext) -> None:
+async def get_status_message(message: Message, state: FSMContext) -> None:
     await state.update_data(status=str(message.text).title())
     await state.set_state(FormState.area)
     await message.answer(text=response["area"], reply_markup=FormK.area_keyboard())
@@ -158,8 +159,9 @@ async def get_info_message(call: CallbackQuery, state: FSMContext) -> None:
 
     form_data = await state.get_data()
     form = Questionnaire(form_data).show()
-    bot_message = await call.message.answer(text=response["permission"].format(form),
-                                            reply_markup=FormK.final_keyboard())
+    bot_message = await call.message.answer(
+        text=response["permission"].format(form), reply_markup=FormK.final_keyboard()
+    )
     await state.update_data(message=bot_message)
 
 

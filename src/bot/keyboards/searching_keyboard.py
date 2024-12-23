@@ -12,8 +12,7 @@ class SearchingK:
         return InlineKeyboardMarkup(inline_keyboard=[[random_b], [clean_history_b], [menu_b]])
 
     @staticmethod
-    def searching_keyboard(like_on: bool,
-                           other_chat_id: str | None = None) -> InlineKeyboardMarkup:
+    def searching_keyboard(like_on: bool, other_chat_id: str | None = None) -> InlineKeyboardMarkup:
         like_b = InlineKeyboardButton(text="👍", callback_data=f"like_{other_chat_id}")
         next_b = InlineKeyboardButton(text="➡️", callback_data="random_searching")
         back_b = InlineKeyboardButton(text="▶️ Обратно", callback_data="searching")

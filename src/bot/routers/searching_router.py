@@ -1,12 +1,12 @@
-from aiogram import Router, F
+from aiogram import F, Router
 from aiogram.types import CallbackQuery, Message, User
-from src.bot.routers.states import MenuState
-from src.bot.routers.menu_router import delete_message, send_other_chat
-from src.bot.keyboards import MenuK, SearchingK, CoworkerK
-from src.bot.response import response
-from src.bot.database import client_connect
-from src.bot.utils.questionnaire import Questionnaire
 
+from src.bot.database import client_connect
+from src.bot.keyboards import CoworkerK, MenuK, SearchingK
+from src.bot.response import response
+from src.bot.routers.menu_router import delete_message, send_other_chat
+from src.bot.routers.states import MenuState
+from src.bot.utils.questionnaire import Questionnaire
 
 searching_router = Router()
 
@@ -46,8 +46,9 @@ async def random_searching(call: CallbackQuery) -> None:
         await call.message.answer(text=response["searching_stop"], reply_markup=MenuK.back_keyboard("searching"))
     else:
         form, chat_id = result
-        await call.message.answer(text=Questionnaire(form).show(),
-                                  reply_markup=SearchingK.searching_keyboard(True, chat_id))
+        await call.message.answer(
+            text=Questionnaire(form).show(), reply_markup=SearchingK.searching_keyboard(True, chat_id)
+        )
 
 
 @searching_router.callback_query(MenuState.menu, lambda cb: cb.data and cb.data.startswith("like"))
@@ -61,9 +62,9 @@ async def random_like(call: CallbackQuery) -> None:
     if chat_id:
         collection = await client_connect(user_id)
         form = await collection.get_self_form()
-        await send_other_chat(chat_id, text=Questionnaire(form).show(response["notification"]),
-                              markup=CoworkerK.notification_keyboard(
-                              user_id, str(call.from_user.username), str(call.message.chat.id)))
-    await call.message.answer(text=str(call.message.text),
-                              reply_markup=SearchingK.searching_keyboard(False))
-
+        await send_other_chat(
+            chat_id,
+            text=Questionnaire(form).show(response["notification"]),
+            markup=CoworkerK.notification_keyboard(user_id, str(call.from_user.username), str(call.message.chat.id)),
+        )
+    await call.message.answer(text=str(call.message.text), reply_markup=SearchingK.searching_keyboard(False))

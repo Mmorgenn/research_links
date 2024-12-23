@@ -1,6 +1,7 @@
 import asyncio
+
 from src.bot.create_bot import bot, dp
-from src.bot.routers import form_router, menu_router, setting_router, searching_router, coworker_router
+from src.bot.routers import coworker_router, form_router, menu_router, searching_router, setting_router
 
 
 async def main() -> None:

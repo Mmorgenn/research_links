@@ -1,13 +1,13 @@
-import requests
-import collections
 import asyncio
+import collections
 from collections import Counter
+
+import requests
 from aiohttp import ClientSession
 
-
 url = "https://api.github.com/users/MMorgenn"
-#user_data = requests.get(url).json()
-#print(user_data)
+# user_data = requests.get(url).json()
+# print(user_data)
 
 USER_URL = "https://api.github.com/users/{}"
 REPOS_URL = "https://api.github.com/users/{}/repos"
@@ -54,8 +54,4 @@ class GithubPars:
         company = self.get_company(user_profile)
         language = self.get_popular_language(repos_data)
         popular_repos = self.get_popular_repos(repos_data)
-        return {
-            "company": company,
-            "language": language,
-            "popular_repos": popular_repos
-        }
+        return {"company": company, "language": language, "popular_repos": popular_repos}

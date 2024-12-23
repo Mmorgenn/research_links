@@ -1,6 +1,7 @@
 from collections import Counter
-from aiogram.types import Message
+
 from aiogram.filters import BaseFilter
+from aiogram.types import Message
 
 
 class List_Filter(BaseFilter):

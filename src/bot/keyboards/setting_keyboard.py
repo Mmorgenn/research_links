@@ -14,4 +14,5 @@ class SettingK:
         menu_b = InlineKeyboardButton(text="➡️ Вернуться в меню", callback_data="main_menu")
 
         return InlineKeyboardMarkup(
-            inline_keyboard=[[form_b], [name_b], [age_b], [status_b], [area_b], [info_b], [menu_b]])
+            inline_keyboard=[[form_b], [name_b], [age_b], [status_b], [area_b], [info_b], [menu_b]]
+        )

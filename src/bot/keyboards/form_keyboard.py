@@ -1,4 +1,4 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup
 
 
 class FormK:
@@ -25,8 +25,9 @@ class FormK:
         startup_b = KeyboardButton(text="Стартапер")
         worker_b = KeyboardButton(text="Работаю")
 
-        return ReplyKeyboardMarkup(keyboard=[[student_b, staught_b], [startup_b, worker_b]],
-                                   resize_keyboard=True, one_time_keyboard=True)
+        return ReplyKeyboardMarkup(
+            keyboard=[[student_b, staught_b], [startup_b, worker_b]], resize_keyboard=True, one_time_keyboard=True
+        )
 
     @staticmethod
     def area_keyboard() -> ReplyKeyboardMarkup:
@@ -37,8 +38,11 @@ class FormK:
         math_b = KeyboardButton(text="Математика")
         it_b = KeyboardButton(text="IT")
 
-        return ReplyKeyboardMarkup(keyboard=[[biology_b, chemistry_b], [physic_b, math_b], [it_b]],
-                                   resize_keyboard=True, one_time_keyboard=True)
+        return ReplyKeyboardMarkup(
+            keyboard=[[biology_b, chemistry_b], [physic_b, math_b], [it_b]],
+            resize_keyboard=True,
+            one_time_keyboard=True,
+        )
 
     @staticmethod
     def integration_keyboard() -> InlineKeyboardMarkup | None:
